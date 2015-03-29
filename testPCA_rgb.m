@@ -30,15 +30,17 @@ for i = 1:3
 end
 
 %% Regenerate from components (for varying sub-portions p)
-for p = 1:size(img,1)
+% N = size(img,1);
+N = 100;
+for p = 1:N
     regenerated_img = zeros(shape);
 
     for i = 1:3
         Ug(:, 1:p, i) = U(:, 1:p, i);
         Sg(1:p, 1:p, i) = S(1:p, 1:p, i);     
-        Vgt(1:p, :, i) = Vt(1:p, :);
+        Vgt(1:p, :, i) = Vt(1:p, :, i);
         regenerated_img(:,:,i) = Ug(:,:,i) * Sg(:,:,i) * Vgt(:,:,i);
     end
-
+    
     imwrite(regenerated_img,sprintf('PCA_rgb_Rubber_Ducky_%d.png', p),'png');
 end
